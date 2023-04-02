@@ -1,0 +1,87 @@
+.login-page {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.websiteLogo {
+  width: 200px;
+  height: 50px;
+  margin-bottom: 50px;
+  margin-top: 30px;
+}
+
+.login-form-container {
+  width: 400px;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 767px) {
+  .login-form-container {
+    width: 350px;
+  }
+}
+
+.form-dark {
+  background-color: black;
+}
+
+.form-light {
+  background-color: white;
+  box-shadow: 0px 0px 4px 4px #f1f5f9;
+}
+
+.text-light {
+  color: white;
+}
+.text-dark {
+  color: #475569;
+}
+
+.login-page-dark {
+  background-color: #313131;
+}
+
+.img-container {
+  display: flex;
+  justify-content: center;
+}
+
+.inputElement {
+  height: 35px;
+  padding-left: 10px;
+  font-size: 15px;
+  outline: none;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.checkbox-tick {
+  height: 18px;
+  width: 18px;
+}
+
+.login-btn {
+  border: 0px none;
+  border-radius: 5px;
+  color: white;
+  background-color: #3b82f6;
+  height: 45px;
+  font-size: 16px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.error-msg {
+  padding: 0px;
+  margin: 0px;
+  margin-top: 10px;
+}

@@ -2,6 +2,7 @@ import {Component} from 'react'
 import Cookie from 'js-cookie'
 
 import NxtWatchContext from '../../NxtWatchContext/NxtWatchContext'
+import './index.css'
 
 class LoginRoute extends Component {
   state = {
@@ -69,43 +70,66 @@ class LoginRoute extends Component {
         }
 
         const passwordType = showPassword ? 'text' : 'password'
+        const loginFormTheme = darkMode ? 'form-dark' : 'form-light'
+        const textColor = darkMode ? 'text-light' : 'text-dark'
+        const pageTheme = darkMode && 'login-page-dark'
 
         const loginPageImage = darkMode
           ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-dark-theme-img.png'
           : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png'
 
         return (
-          <div>
-            <div>
-              <img alt="logo" src={loginPageImage} />
+          <div className={`login-page ${pageTheme}`}>
+            <div className={`login-form-container ${loginFormTheme}`}>
+              <div className="img-container">
+                <img className="websiteLogo" alt="logo" src={loginPageImage} />
+              </div>
 
-              <form onSubmit={this.submitForm}>
-                <label htmlFor="username">USERNAME</label>
+              <form className="login-form" onSubmit={this.submitForm}>
+                <label className={`label-ele ${textColor}`} htmlFor="username">
+                  USERNAME
+                </label>
                 <input
+                  className="inputElement"
+                  placeholder="Username"
                   onChange={updateUsername}
                   value={username}
                   type="text"
                   id="username"
                 />
 
-                <label htmlFor="password">PASSWORD</label>
+                <label className={`label-ele ${textColor}`} htmlFor="password">
+                  PASSWORD
+                </label>
                 <input
+                  className="inputElement"
+                  placeholder="Password"
                   onChange={updatePassword}
                   value={password}
                   type={passwordType}
                   id="password"
                 />
 
-                <input
-                  onClick={onClickShowPassword}
-                  type="checkbox"
-                  id="checkbox"
-                />
-                <label htmlFor="checkbox">Show Password</label>
+                <div>
+                  <input
+                    className="checkbox-tick"
+                    onClick={onClickShowPassword}
+                    type="checkbox"
+                    id="checkbox"
+                  />
+                  <label
+                    className={`label-ele ${textColor}`}
+                    htmlFor="checkbox"
+                  >
+                    Show Password
+                  </label>
+                </div>
 
-                {showSubmitError && <p>{errorMsg}</p>}
+                {showSubmitError && <p className="error-msg">*{errorMsg}</p>}
 
-                <button type="submit">Login</button>
+                <button className="login-btn" type="submit">
+                  Login
+                </button>
               </form>
             </div>
           </div>
