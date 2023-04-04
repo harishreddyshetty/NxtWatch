@@ -1,0 +1,66 @@
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.header-details-container {
+  display: flex;
+  align-items: center;
+}
+
+.header-logo {
+  width: 170px;
+}
+.header-btns {
+  background-color: transparent;
+  border: 0px none;
+}
+
+.profile {
+  width: 40px;
+  margin-right: 20px;
+}
+
+@media screen and (min-width: 768px) {
+  .logout-icon {
+    display: none;
+  }
+  .hamburger-icon {
+    display: none;
+  }
+  .header-icons {
+    font-size: 32px;
+    cursor: pointer;
+    margin-right: 15px;
+  }
+}
+.logout-btn {
+  border: 1px solid #3b82f6;
+  width: 85px;
+  height: 35px;
+  background-color: transparent;
+  cursor: pointer;
+  color: #3b82f6;
+  font-weight: 600;
+  font-size: 15px;
+  border-radius: 3px;
+  margin-right: 20px;
+}
+
+@media screen and (max-width: 767px) {
+  .logout-btn {
+    display: none;
+  }
+  .profile {
+    display: none;
+  }
+  .header-icons {
+    font-size: 28px;
+    cursor: pointer;
+  }
+  .header-logo {
+    width: 130px;
+  }
+}
