@@ -5,13 +5,21 @@
   padding: 10px;
 }
 
+.nav-bar-dark {
+  background-color: #231f20;
+}
+.nav-bar-light {
+  background-color: white;
+}
+
 .header-details-container {
   display: flex;
   align-items: center;
 }
 
 .header-logo {
-  width: 170px;
+  width: 150px;
+  margin-left: 30px;
 }
 .header-btns {
   background-color: transparent;
@@ -19,8 +27,12 @@
 }
 
 .profile {
-  width: 40px;
+  width: 30px;
   margin-right: 20px;
+}
+
+.theme-btn-color {
+  color: white;
 }
 
 @media screen and (min-width: 768px) {
@@ -31,18 +43,17 @@
     display: none;
   }
   .header-icons {
-    font-size: 32px;
+    font-size: 25px;
     cursor: pointer;
     margin-right: 15px;
   }
 }
 .logout-btn {
-  border: 1px solid #3b82f6;
   width: 85px;
   height: 35px;
   background-color: transparent;
   cursor: pointer;
-  color: #3b82f6;
+
   font-weight: 600;
   font-size: 15px;
   border-radius: 3px;
@@ -63,4 +74,14 @@
   .header-logo {
     width: 130px;
   }
+}
+
+.btn-dark {
+  border: 1px solid white;
+  color: white;
+}
+
+.btn-light {
+  border: 1px solid #3b82f6;
+  color: #3b82f6;
 }
