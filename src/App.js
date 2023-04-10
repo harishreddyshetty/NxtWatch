@@ -9,18 +9,19 @@ import NxtWatchContext from './NxtWatchContext/NxtWatchContext'
 
 // Replace your code here
 class App extends Component {
-  state = {darkMode: false}
+  state = {darkMode: false, activeTab: 'HOME'}
 
   onClickThemeBtn = () => {
     this.setState(prevState => ({darkMode: !prevState.darkMode}))
   }
 
   render() {
-    const {darkMode} = this.state
+    const {darkMode, activeTab} = this.state
     return (
       <NxtWatchContext.Provider
         value={{
           darkMode,
+          activeTab,
           onClickThemeBtn: this.onClickThemeBtn,
         }}
       >
