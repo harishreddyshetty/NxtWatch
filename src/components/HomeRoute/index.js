@@ -1,10 +1,13 @@
 import {Component} from 'react'
 import {Link} from 'react-router-dom'
+import {formatDistanceToNow} from 'date-fns'
 import {BsX} from 'react-icons/bs'
 import {HiSearch} from 'react-icons/hi'
 import Cookie from 'js-cookie'
 import Header from '../Header'
 import Navbar from '../Navbar'
+
+import NxtWatchContext from '../../NxtWatchContext/NxtWatchContext'
 
 import './index.css'
 
@@ -13,6 +16,7 @@ class HomeRoute extends Component {
 
   componentDidMount() {
     this.getHomeVideoDetails()
+    console.log(formatDistanceToNow(new Date(2021, 8, 20)))
   }
 
   getHomeVideoDetails = async () => {
@@ -84,55 +88,90 @@ class HomeRoute extends Component {
     this.getHomeVideoDetails()
   }
 
-  renderVideosSection = () => {
-    const {homePageVideos, searchInput} = this.state
+  renderVideosSection = () => (
+    <NxtWatchContext.Consumer>
+      {value => {
+        const {darkMode} = value
+        const {homePageVideos, searchInput} = this.state
 
-    return (
-      <div>
-        <div>
-          <input
-            value={searchInput}
-            onChange={this.updateSearch}
-            type="search"
-            placeholder="search"
-          />
-          <button onClick={this.onClickSearch} type="button">
-            <HiSearch />
-          </button>
-        </div>
+        const videosContainerBg = darkMode ? 'bg-dark' : 'bg-light'
 
-        <ul className="home-page-videos-list">
-          {homePageVideos.map(eachVideo => (
-            <Link to={eachVideo.id} className="text">
-              <li className="home-video-list-item">
-                <div>
-                  <img
-                    className="thumbnail-img"
-                    alt="thumbnail"
-                    src={eachVideo.thumbnailUrl}
-                  />
+        const videoNameText = darkMode ? 'title-light' : 'title-dark'
+        const videoDetailsText = darkMode
+          ? 'details-text-light'
+          : 'details-text-dark'
 
-                  <div className="video-bottom-section">
-                    <img
-                      className="home-channel-logo"
-                      alt="channel-logo"
-                      src={eachVideo.channel.profileImageUrl}
-                    />
-                    <div>
-                      <p>{eachVideo.title}</p>
-                      <p>{eachVideo.channel.name}</p>
-                      <p>{eachVideo.viewCount}</p>
-                      <p>{eachVideo.publishedAt}</p>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            </Link>
-          ))}
-        </ul>
-      </div>
-    )
-  }
+        return (
+          <div className={`videos-section ${videosContainerBg}`}>
+            <div>
+              <input
+                className="search-input"
+                value={searchInput}
+                onChange={this.updateSearch}
+                type="search"
+                placeholder="Search"
+              />
+              <button
+                className="search-btn"
+                onClick={this.onClickSearch}
+                type="button"
+              >
+                <HiSearch />
+              </button>
+            </div>
+
+            <ul className="home-page-videos-list">
+              {homePageVideos.map(eachVideo => {
+                const dateTime = new Date(eachVideo.publishedAt)
+
+                const year = dateTime.getFullYear()
+                const date = dateTime.getDate()
+                const month = dateTime.getMonth()
+
+                const publishedAt = formatDistanceToNow(
+                  new Date(year, month, date),
+                )
+
+                return (
+                  <Link to={eachVideo.id} className="text">
+                    <li className="home-video-list-item">
+                      <div>
+                        <img
+                          className="thumbnail-img"
+                          alt="thumbnail"
+                          src={eachVideo.thumbnailUrl}
+                        />
+
+                        <div className="video-bottom-section">
+                          <img
+                            className="home-channel-logo"
+                            alt="channel-logo"
+                            src={eachVideo.channel.profileImageUrl}
+                          />
+                          <div>
+                            <p className={videoNameText}>{eachVideo.title}</p>
+                            <div className={`${videoDetailsText} channelViews`}>
+                              <p className="channel-name">
+                                {eachVideo.channel.name}
+                              </p>
+                              <p className="view-count">
+                                {eachVideo.viewCount}
+                              </p>
+                              <p className="published-at">.{publishedAt}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </Link>
+                )
+              })}
+            </ul>
+          </div>
+        )
+      }}
+    </NxtWatchContext.Consumer>
+  )
 
   render() {
     const {banner} = this.state

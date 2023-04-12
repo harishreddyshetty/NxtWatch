@@ -23,6 +23,7 @@ const Header = props => (
       }
 
       const headerThemeColor = darkMode ? 'nav-bar-dark' : 'nav-bar-light'
+      const headerIconsColor = darkMode && 'theme-btn-color'
 
       const headerLogo = darkMode
         ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-dark-theme-img.png'
@@ -52,10 +53,10 @@ const Header = props => (
             />
 
             <button className="header-btns hamburger-icon" type="button">
-              <CgFormatJustify className="header-icons" />
+              <CgFormatJustify className={`header-icons ${headerIconsColor}`} />
             </button>
             <button className="header-btns logout-icon" type="button">
-              <FiLogOut className="header-icons" />
+              <FiLogOut className={`header-icons ${headerIconsColor}`} />
             </button>
 
             <button

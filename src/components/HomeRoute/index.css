@@ -15,6 +15,10 @@
   background-size: cover;
   background-position-x: right;
 }
+.videos-section {
+  padding-left: 30px;
+  padding-top: 20px;
+}
 
 .banner-top-section {
   display: flex;
@@ -36,9 +40,11 @@
   flex-wrap: wrap;
   list-style-type: none;
   width: 80vw;
-  background-color: beige;
   overflow-y: auto;
-  height: 88vh;
+  height: 90vh;
+  padding-top: 30px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
 }
 
 .text {
@@ -46,12 +52,13 @@
 }
 
 .thumbnail-img {
-  width: 280px;
+  width: 350px;
 }
 
 .home-video-list-item {
-  width: 300px;
+  width: 350px;
   margin-right: 30px;
+  margin-bottom: 30px;
 }
 .home-channel-logo {
   width: 40px;
@@ -62,4 +69,103 @@
 .video-bottom-section {
   display: flex;
   align-items: flex-start;
+}
+
+@media screen and (max-width: 767px) {
+  .videos-section {
+    width: 375px;
+  }
+
+  .videos-section {
+    padding-left: 0px;
+    margin-left: 0px;
+    width: 100vw;
+  }
+  .home-page-videos-list {
+    width: 100vw;
+    padding-left: 0px;
+    margin-left: 0px;
+  }
+  .home-video-list-item {
+    padding-left: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+  .thumbnail-img {
+    width: 100vw;
+  }
+  .banner-section {
+    width: 100vw;
+    background-size: auto;
+  }
+}
+
+.title-dark {
+  color: #231f20;
+  font-family: 'Roboto';
+  font-size: 17px;
+  font-weight: 400;
+}
+.title-light {
+  color: #f1f5f9;
+}
+
+.details-text-light {
+  color: #64748b;
+}
+
+.details-text-dark {
+  color: #616e7c;
+}
+
+.bg-dark {
+  background-color: #181818;
+}
+
+.bg-light {
+  background-color: #f9f9f9;
+}
+
+.search-input {
+  width: 400px;
+  height: 33px;
+  background-color: transparent;
+  outline: none;
+  border: 1px solid #d7dfe9;
+  padding-left: 5px;
+  font-size: 15px;
+  color: #d7dfe9;
+}
+
+.search-btn {
+  height: 33px;
+  width: 50px;
+  border: 1px solid #d7dfe9;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 767px) {
+  .search-input {
+    width: 280px;
+    margin-left: 10px;
+  }
+  .video-bottom-section {
+    margin-left: 10px;
+  }
+  .channelViews {
+    display: flex;
+    align-items: center;
+  }
+  .channel-name {
+    margin-right: 10px;
+  }
+}
+
+.view-count {
+  display: inline;
+  margin-right: 10px;
+}
+
+.published-at {
+  display: inline;
 }
