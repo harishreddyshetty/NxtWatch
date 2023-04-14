@@ -71,7 +71,7 @@
   align-items: flex-start;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 575px) {
   .videos-section {
     width: 375px;
   }
@@ -97,6 +97,30 @@
   .banner-section {
     width: 100vw;
     background-size: auto;
+  }
+}
+
+@media screen and (min-width: 576px) and (max-width: 767px) {
+  .home-video-list-item {
+    width: 250px;
+    padding-left: 0px;
+    margin-left: 0px;
+    /* background-color: #616e7c; */
+  }
+  .thumbnail-img {
+    width: 250px;
+  }
+  .home-page-videos-list {
+    padding-left: 0px;
+    margin-left: 0px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 576px;
+    /* background-color: #181818; */
+  }
+  .videos-section {
+    width: 576px;
+    margin-left: 0px;
   }
 }
 
@@ -144,7 +168,7 @@
   cursor: pointer;
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 575px) {
   .search-input {
     width: 280px;
     margin-left: 10px;
@@ -168,4 +192,34 @@
 
 .published-at {
   display: inline;
+}
+
+.noSavedVideoImg {
+  width: 400px;
+}
+
+.noVideosContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80vw;
+  padding-bottom: 15px;
+}
+
+.retry-btn {
+  background-color: #4f46e5;
+  border: 0px none;
+  border-radius: 5px;
+  height: 35px;
+  width: 80px;
+  color: white;
+  cursor: pointer;
+}
+
+.loader-container {
+  width: 80vw;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import {formatDistanceToNow} from 'date-fns'
 import {BsX} from 'react-icons/bs'
 import {HiSearch} from 'react-icons/hi'
+import Loader from 'react-loader-spinner'
 import Cookie from 'js-cookie'
 import Header from '../Header'
 import Navbar from '../Navbar'
@@ -11,15 +12,27 @@ import NxtWatchContext from '../../NxtWatchContext/NxtWatchContext'
 
 import './index.css'
 
+const apiStatusConstants = {
+  initial: 'INITIAL',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+  inProgress: 'IN_PROGRESS',
+}
+
 class HomeRoute extends Component {
-  state = {banner: true, homePageVideos: [], searchInput: ''}
+  state = {
+    banner: true,
+    homePageVideos: [],
+    searchInput: '',
+    apiStatus: apiStatusConstants.initial,
+  }
 
   componentDidMount() {
     this.getHomeVideoDetails()
-    console.log(formatDistanceToNow(new Date(2021, 8, 20)))
   }
 
   getHomeVideoDetails = async () => {
+    this.setState({apiStatus: apiStatusConstants.inProgress})
     const {searchInput} = this.state
     const jwtToken = Cookie.get('jwt_token')
     const url = `https://apis.ccbp.in/videos/all?search=${searchInput}`
@@ -47,9 +60,14 @@ class HomeRoute extends Component {
         },
       }))
 
-      this.setState({homePageVideos: updatedVideosData})
+      this.setState({
+        homePageVideos: updatedVideosData,
+        apiStatus: apiStatusConstants.success,
+      })
 
       console.log(updatedVideosData)
+    } else {
+      this.setState({apiStatus: apiStatusConstants.failure})
     }
   }
 
@@ -81,10 +99,14 @@ class HomeRoute extends Component {
   )
 
   updateSearch = event => {
-    this.setState({searchInput: event.target.value}, this.getHomeVideoDetails)
+    this.setState({searchInput: event.target.value})
   }
 
   onClickSearch = () => {
+    this.getHomeVideoDetails()
+  }
+
+  onClickRetry = () => {
     this.getHomeVideoDetails()
   }
 
@@ -120,7 +142,76 @@ class HomeRoute extends Component {
               </button>
             </div>
 
-            <ul className="home-page-videos-list">
+            {homePageVideos.length === 0 && searchInput !== '' ? (
+              <div className="noVideosContainer">
+                <img
+                  className="noSavedVideoImg"
+                  alt="no saved videos"
+                  src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-search-results-img.png"
+                />
+                <h1>No Search results found</h1>
+                <p>Try different keyword or remove search filter</p>
+                <button
+                  className="retry-btn"
+                  type="button"
+                  onClick={this.onClickRetry}
+                >
+                  Retry
+                </button>
+              </div>
+            ) : (
+              <ul className="home-page-videos-list">
+                {homePageVideos.map(eachVideo => {
+                  const dateTime = new Date(eachVideo.publishedAt)
+
+                  const year = dateTime.getFullYear()
+                  const date = dateTime.getDate()
+                  const month = dateTime.getMonth()
+
+                  const publishedAt = formatDistanceToNow(
+                    new Date(year, month, date),
+                  )
+
+                  return (
+                    <Link to={eachVideo.id} className="text">
+                      <li className="home-video-list-item">
+                        <div>
+                          <img
+                            className="thumbnail-img"
+                            alt="thumbnail"
+                            src={eachVideo.thumbnailUrl}
+                          />
+
+                          <div className="video-bottom-section">
+                            <img
+                              className="home-channel-logo"
+                              alt="channel-logo"
+                              src={eachVideo.channel.profileImageUrl}
+                            />
+                            <div>
+                              <p className={videoNameText}>{eachVideo.title}</p>
+                              <div
+                                className={`${videoDetailsText} channelViews`}
+                              >
+                                <p className="channel-name">
+                                  {eachVideo.channel.name}
+                                </p>
+                                <p className="view-count">
+                                  {eachVideo.viewCount}
+                                </p>
+                                <p className="published-at">.{publishedAt}</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </li>
+                    </Link>
+                  )
+                })}
+              </ul>
+            )}
+
+            {/* <ul className="home-page-videos-list">
               {homePageVideos.map(eachVideo => {
                 const dateTime = new Date(eachVideo.publishedAt)
 
@@ -166,12 +257,47 @@ class HomeRoute extends Component {
                   </Link>
                 )
               })}
-            </ul>
+            </ul> */}
           </div>
         )
       }}
     </NxtWatchContext.Consumer>
   )
+
+  renderNoSearchResults = () => (
+    <div>
+      <img
+        alt="no saved videos"
+        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-search-results-img.png"
+      />
+      <h1>No Search results found</h1>
+      <p>Try different keyword or remove search filter</p>
+      <button type="button" onClick={this.onClickRetry}>
+        Retry
+      </button>
+    </div>
+  )
+
+  renderLoadingView = () => (
+    <div className="loader-container" data-testid="loader">
+      <Loader type="ThreeDots" color="#4f46e5" height="50" width="50" />
+    </div>
+  )
+
+  renderHomeVideosDetails = () => {
+    const {apiStatus} = this.state
+
+    switch (apiStatus) {
+      case apiStatusConstants.success:
+        return this.renderVideosSection()
+      case apiStatusConstants.failure:
+        return this.renderFailureView()
+      case apiStatusConstants.inProgress:
+        return this.renderLoadingView()
+      default:
+        return null
+    }
+  }
 
   render() {
     const {banner} = this.state
@@ -183,7 +309,7 @@ class HomeRoute extends Component {
           <Navbar />
           <div>
             {banner && this.renderBanner()}
-            {this.renderVideosSection()}
+            {this.renderHomeVideosDetails()}
           </div>
         </div>
       </div>
