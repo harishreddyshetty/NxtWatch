@@ -6,6 +6,8 @@ import {HiFire} from 'react-icons/hi'
 import Header from '../Header'
 import Navbar from '../Navbar'
 
+import NxtWatchContext from '../../NxtWatchContext/NxtWatchContext'
+
 import './index.css'
 
 class TrendingRoute extends Component {
@@ -58,38 +60,67 @@ class TrendingRoute extends Component {
     const {trendingVideosList} = this.state
 
     return (
-      <ul className="trending-videos-list">
-        {trendingVideosList.map(eachVideo => {
-          const dateTime = new Date(eachVideo.publishedAt)
+      <NxtWatchContext.Consumer>
+        {value => {
+          const {darkMode} = value
 
-          const year = dateTime.getFullYear()
-          const date = dateTime.getDate()
-          const month = dateTime.getMonth()
+          const bannerBg = darkMode ? 'banner-dark' : 'banner-light'
+          const VideosSectionBg = darkMode
+            ? 'videoSection-dark'
+            : 'videoSection-light'
 
-          const publishedAt = formatDistanceToNow(new Date(year, month, date))
+          const trendingIconBg = darkMode ? 'icon-dark' : 'icon-light'
 
           return (
-            <Link to={`/videos/${eachVideo.id}`} className="text">
-              <li key={eachVideo.id} className="video-list-item">
-                <div className="video-item-section">
-                  <img
-                    className="thumbnail-image"
-                    alt=""
-                    src={eachVideo.thumbnailUrl}
-                  />
-
-                  <div className="video-details-section">
-                    <p className="video-title">{eachVideo.title}</p>
-                    <p className="channel-name">{eachVideo.channel.name}</p>
-                    <p className="views-count">{eachVideo.viewCount} Views</p>
-                    <p className="publishedAt">. {publishedAt}</p>
-                  </div>
+            <>
+              <div className={`trending-section ${bannerBg}`}>
+                <div className={`trending-section-icon ${trendingIconBg}`}>
+                  <HiFire className="trending-icon" />
                 </div>
-              </li>
-            </Link>
+                <h1>Trending</h1>
+              </div>
+              <ul className={`trending-videos-list ${VideosSectionBg}`}>
+                {trendingVideosList.map(eachVideo => {
+                  const dateTime = new Date(eachVideo.publishedAt)
+
+                  const year = dateTime.getFullYear()
+                  const date = dateTime.getDate()
+                  const month = dateTime.getMonth()
+
+                  const publishedAt = formatDistanceToNow(
+                    new Date(year, month, date),
+                  )
+
+                  return (
+                    <Link to={`/videos/${eachVideo.id}`} className="text">
+                      <li key={eachVideo.id} className="video-list-item">
+                        <div className="video-item-section">
+                          <img
+                            className="thumbnail-image"
+                            alt=""
+                            src={eachVideo.thumbnailUrl}
+                          />
+
+                          <div className="video-details-section">
+                            <p className="video-title">{eachVideo.title}</p>
+                            <p className="channel-name">
+                              {eachVideo.channel.name}
+                            </p>
+                            <p className="views-count">
+                              {eachVideo.viewCount} Views
+                            </p>
+                            <p className="publishedAt">. {publishedAt}</p>
+                          </div>
+                        </div>
+                      </li>
+                    </Link>
+                  )
+                })}
+              </ul>
+            </>
           )
-        })}
-      </ul>
+        }}
+      </NxtWatchContext.Consumer>
     )
   }
 
@@ -100,10 +131,7 @@ class TrendingRoute extends Component {
 
         <div className="home-nav-section">
           <Navbar />
-          <div>
-            {this.renderTrendingBanner()}
-            {this.renderVideo()}
-          </div>
+          <div>{this.renderVideo()}</div>
         </div>
       </div>
     )
@@ -111,3 +139,5 @@ class TrendingRoute extends Component {
 }
 
 export default TrendingRoute
+
+// {this.renderTrendingBanner()}

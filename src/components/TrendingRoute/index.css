@@ -3,12 +3,19 @@
   align-items: center;
   height: 100px;
   width: 90vw;
-  background-color: antiquewhite;
+
   padding-left: 50px;
 }
 
+.banner-light {
+  background-color: #f1f1f1;
+}
+
+.banner-dark {
+  background-color: #231f20;
+}
+
 .trending-section-icon {
-  background-color: aqua;
   padding: 20px;
   border-radius: 50px;
   margin-right: 50px;
@@ -16,13 +23,23 @@
 
 .trending-icon {
   font-size: 30px;
+  color: #ff0000;
 }
 
 .trending-videos-list {
   list-style-type: none;
-  margin-top: 20px;
+  margin-top: 0px;
+  padding-top: 20px;
   height: 90vh;
   overflow-y: auto;
+}
+
+.videoSection-dark {
+  background-color: #0f0f0f;
+}
+
+.videoSection-light {
+  background-color: #f9f9f9;
 }
 
 .video-list-item {
@@ -66,4 +83,12 @@
 
 .channel-name {
   margin-top: 15px;
+}
+
+.icon-light {
+  background-color: #d7dfe9;
+}
+
+.icon-dark {
+  background-color: #0f0f0f;
 }
