@@ -92,3 +92,7 @@
 .icon-dark {
   background-color: #0f0f0f;
 }
+
+.text {
+  text-decoration: none;
+}

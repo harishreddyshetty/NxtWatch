@@ -1,0 +1,13 @@
+.gamingVideos-container {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+}
+
+.gamingThumbnail {
+  width: 300px;
+}
+
+.gamingVideo-list-item {
+  margin-right: 30px;
+}
