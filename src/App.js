@@ -6,26 +6,28 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import TrendingRoute from './components/TrendingRoute'
 import GamingRoute from './components/GamingRoute'
 import VideoItemDetailsRoute from './components/VideoItemDetailsRoute'
+import SavedVideosRoute from './components/SavedVideosRoute'
 
 import './App.css'
 import NxtWatchContext from './NxtWatchContext/NxtWatchContext'
 
 // Replace your code here
 class App extends Component {
-  state = {darkMode: false, activeTab: 'HOME'}
+  state = {darkMode: false, activeTab: 'HOME', savedVideos: []}
 
   onClickThemeBtn = () => {
     this.setState(prevState => ({darkMode: !prevState.darkMode}))
   }
 
   render() {
-    const {darkMode, activeTab} = this.state
+    const {darkMode, activeTab, savedVideos} = this.state
     return (
       <NxtWatchContext.Provider
         value={{
           darkMode,
           activeTab,
           onClickThemeBtn: this.onClickThemeBtn,
+          savedVideos,
         }}
       >
         <Switch>
@@ -33,6 +35,11 @@ class App extends Component {
           <ProtectedRoute exact path="/" component={HomeRoute} />
           <ProtectedRoute exact path="/trending" component={TrendingRoute} />
           <ProtectedRoute exact path="/gaming" component={GamingRoute} />
+          <ProtectedRoute
+            exact
+            path="/saved-videos"
+            component={SavedVideosRoute}
+          />
           <ProtectedRoute
             exact
             path="/videos/:id"

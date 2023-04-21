@@ -5,7 +5,7 @@ import {MdPlaylistAdd} from 'react-icons/md'
 import Header from '../Header'
 import Navbar from '../Navbar'
 
-// import NxtWatchContext from '../../NxtWatchContext/NxtWatchContext'
+import NxtWatchContext from '../../NxtWatchContext/NxtWatchContext'
 
 import './index.css'
 
@@ -44,30 +44,47 @@ class GamingRoute extends Component {
     const {videosList} = this.state
 
     return (
-      <div>
-        <div>
-          <div>
-            <MdPlaylistAdd className="trending-icon" />
-          </div>
-          <h1>Gaming</h1>
-        </div>
+      <NxtWatchContext.Consumer>
+        {value => {
+          const {darkMode} = value
 
-        <ul className="gamingVideos-container">
-          {videosList.map(eachVideo => (
-            <Link to={`/videos/${eachVideo.id}`} className="text">
-              <li key={eachVideo.id} className="gamingVideo-list-item">
-                <img
-                  className="gamingThumbnail"
-                  alt="game"
-                  src={eachVideo.thumbnailUrl}
-                />
-                <p>{eachVideo.title}</p>
-                <p>{eachVideo.viewCount} Watching Worldwide</p>
-              </li>
-            </Link>
-          ))}
-        </ul>
-      </div>
+          const bannerBg = darkMode ? 'banner-dark' : 'banner-light'
+          const gamingIconBg = darkMode
+            ? 'gaming-icon-dark'
+            : 'gaming-icon-light'
+
+          const gamingVideosSectionBg = darkMode
+            ? 'videoSection-dark'
+            : 'videoSection-light'
+
+          return (
+            <div>
+              <div className={`gaming-section ${bannerBg}`}>
+                <div className={`gaming-icon-container ${gamingIconBg}`}>
+                  <MdPlaylistAdd className="gaming-icon" />
+                </div>
+                <h1>Gaming</h1>
+              </div>
+
+              <ul className={`gamingVideos-container ${gamingVideosSectionBg}`}>
+                {videosList.map(eachVideo => (
+                  <Link to={`/videos/${eachVideo.id}`} className="text">
+                    <li key={eachVideo.id} className="gamingVideo-list-item">
+                      <img
+                        className="gamingThumbnail"
+                        alt="game"
+                        src={eachVideo.thumbnailUrl}
+                      />
+                      <p>{eachVideo.title}</p>
+                      <p>{eachVideo.viewCount} Watching Worldwide</p>
+                    </li>
+                  </Link>
+                ))}
+              </ul>
+            </div>
+          )
+        }}
+      </NxtWatchContext.Consumer>
     )
   }
 

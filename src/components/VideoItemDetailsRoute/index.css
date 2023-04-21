@@ -1,0 +1,46 @@
+.views-buttons-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.views-published-container {
+  display: flex;
+  align-items: center;
+}
+
+.buttons-container {
+  display: flex;
+  align-items: center;
+  list-style-type: none;
+}
+
+.channel-details-container {
+  display: flex;
+  align-items: flex-start;
+}
+
+.channel-img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  margin-top: 15px;
+}
+
+.single-btn-container {
+  margin-right: 10px;
+}
+
+.btn {
+  background-color: transparent;
+  border: 0px none;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-icon {
+  font-size: 25px;
+  margin-right: 5px;
+}

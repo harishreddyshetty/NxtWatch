@@ -171,7 +171,7 @@ class HomeRoute extends Component {
                   )
 
                   return (
-                    <Link to={eachVideo.id} className="text">
+                    <Link to={`/videos/${eachVideo.id}`} className="text">
                       <li className="home-video-list-item">
                         <div>
                           <img
@@ -208,54 +208,6 @@ class HomeRoute extends Component {
                 })}
               </ul>
             )}
-
-            {/* <ul className="home-page-videos-list">
-              {homePageVideos.map(eachVideo => {
-                const dateTime = new Date(eachVideo.publishedAt)
-
-                const year = dateTime.getFullYear()
-                const date = dateTime.getDate()
-                const month = dateTime.getMonth()
-
-                const publishedAt = formatDistanceToNow(
-                  new Date(year, month, date),
-                )
-
-                return (
-                  <Link to={eachVideo.id} className="text">
-                    <li className="home-video-list-item">
-                      <div>
-                        <img
-                          className="thumbnail-img"
-                          alt="thumbnail"
-                          src={eachVideo.thumbnailUrl}
-                        />
-
-                        <div className="video-bottom-section">
-                          <img
-                            className="home-channel-logo"
-                            alt="channel-logo"
-                            src={eachVideo.channel.profileImageUrl}
-                          />
-                          <div>
-                            <p className={videoNameText}>{eachVideo.title}</p>
-                            <div className={`${videoDetailsText} channelViews`}>
-                              <p className="channel-name">
-                                {eachVideo.channel.name}
-                              </p>
-                              <p className="view-count">
-                                {eachVideo.viewCount}
-                              </p>
-                              <p className="published-at">.{publishedAt}</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  </Link>
-                )
-              })}
-            </ul> */}
           </div>
         )
       }}

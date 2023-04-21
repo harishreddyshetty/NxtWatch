@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import {AiFillHome} from 'react-icons/ai'
 import {HiFire} from 'react-icons/hi'
 import {SiYoutubegaming} from 'react-icons/si'
+import {MdPlaylistAdd} from 'react-icons/md'
 import NxtWatchContext from '../../NxtWatchContext/NxtWatchContext'
 import './index.css'
 
@@ -26,7 +27,7 @@ const navItems = [
     path: '/gaming',
   },
   {
-    icon: <SiYoutubegaming className="nav-icon" />,
+    icon: <MdPlaylistAdd className="nav-icon" />,
     id: 'SAVED VIDEOS',
     name: 'Saved videos',
     path: '/saved-videos',
@@ -62,14 +63,3 @@ const Navbar = () => (
 )
 
 export default Navbar
-
-//  <nav className={`${navBackground} nav-bar-container`}>
-//           <ul className="nav-items-list">
-//             <Link to="/" className="text">
-//               <li className="nav-item">
-//                 <AiFillHome className="nav-icon" />
-//                 <p className={`${navItemsText} nav-item-name`}>Home</p>
-//               </li>
-//             </Link>
-//           </ul>
-//         </nav>

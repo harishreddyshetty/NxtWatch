@@ -1,16 +1,31 @@
 import {Component} from 'react'
 import Cookie from 'js-cookie'
 import ReactPlayer from 'react-player'
-// import {formatDistanceToNow} from 'date-fns'
+import {formatDistanceToNow} from 'date-fns'
+import {BiLike, BiDislike} from 'react-icons/bi'
+import {MdPlaylistAdd} from 'react-icons/md'
+import Loader from 'react-loader-spinner'
+import Header from '../Header'
+import Navbar from '../Navbar'
+
+import './index.css'
+
+const apiStatusConstants = {
+  initial: 'INITIAL',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+  inProgress: 'IN_PROGRESS',
+}
 
 class VideoItemDetailsRoute extends Component {
-  state = {videoItemDetails: {}}
+  state = {videoItemDetails: {}, apiStatus: apiStatusConstants.initial}
 
   componentDidMount() {
     this.getVideoDetails()
   }
 
   getVideoDetails = async () => {
+    this.setState({apiStatus: apiStatusConstants.inProgress})
     const jwtToken = Cookie.get('jwt_token')
     const {match} = this.props
     const {params} = match
@@ -41,39 +56,115 @@ class VideoItemDetailsRoute extends Component {
         viewCount: videoDetails.view_count,
       }
 
-      this.setState({videoItemDetails: updatedData})
-
-      console.log(updatedData)
+      this.setState({
+        videoItemDetails: updatedData,
+        apiStatus: apiStatusConstants.success,
+      })
+    } else {
+      this.setState({apiStatus: apiStatusConstants.failure})
     }
   }
 
   renderVideoPlayer = () => {
     const {videoItemDetails} = this.state
-    // const {channel} = videoDetails
-    // const {name} = channel
-    console.log(videoItemDetails, 'render')
+
+    console.log(videoItemDetails, 'video Details of player')
+    console.log(videoItemDetails.channel.name)
+
+    const dateTime = new Date(videoItemDetails.publishedAt)
+
+    const year = dateTime.getFullYear()
+    const date = dateTime.getDate()
+    const month = dateTime.getMonth()
+
+    const publishedAt = formatDistanceToNow(new Date(year, month, date))
 
     return (
       <div>
-        <ReactPlayer url={videoItemDetails.videoUrl} controls />
-        {/* <h1>{name}</h1> */}
-        {/* likes */}
-        {/* <div>
-          <div>
-            <p>{videoDetails.viewCount} views</p>
-            <p>{videoDetails.publishedAt}</p>
+        <ReactPlayer
+          url={videoItemDetails.videoUrl}
+          controls
+          width="65vw"
+          height="500px"
+        />
+        <p>{videoItemDetails.title}</p>
+        <div className="views-buttons-container">
+          <div className="views-published-container">
+            <p>{videoItemDetails.viewCount} views</p>
+            <p>. {publishedAt}</p>
           </div>
-        </div> */}
+          <ul className="buttons-container">
+            <li className="single-btn-container">
+              <button className="btn" type="button">
+                <BiLike className="btn-icon" /> Like
+              </button>
+            </li>
+
+            <li className="single-btn-container">
+              <button className="btn" type="button">
+                <BiDislike className="btn-icon" /> Dislike
+              </button>
+            </li>
+
+            <li className="single-btn-container">
+              <button className="btn" type="button">
+                <MdPlaylistAdd className="btn-icon" /> save
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <hr />
+
+        <div className="channel-details-container">
+          <img
+            className="channel-img"
+            src={videoItemDetails.channel.profileImageUrl}
+            alt={videoItemDetails.channel.name}
+          />
+
+          <div>
+            <p>{videoItemDetails.channel.name}</p>
+            <p>{videoItemDetails.channel.subscriberCount} subscribers</p>
+          </div>
+        </div>
+
+        <p>{videoItemDetails.description}</p>
       </div>
     )
   }
 
+  renderLoadingView = () => (
+    <div className="loader-container" data-testid="loader">
+      <Loader type="ThreeDots" color="#4f46e5" height="50" width="50" />
+    </div>
+  )
+
+  renderVideoDetailsPage = () => {
+    const {apiStatus} = this.state
+
+    switch (apiStatus) {
+      case apiStatusConstants.success:
+        return this.renderVideoPlayer()
+      case apiStatusConstants.failure:
+        return this.renderFailureView()
+      case apiStatusConstants.inProgress:
+        return this.renderLoadingView()
+      default:
+        return null
+    }
+  }
+
   render() {
     return (
-      <>
-        <h1>Video</h1>
-        {this.renderVideoPlayer()}
-      </>
+      <div>
+        <Header />
+
+        <div className="home-nav-section">
+          <Navbar />
+          <div>{this.renderVideoDetailsPage()}</div>
+        </div>
+      </div>
     )
   }
 }

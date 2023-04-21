@@ -1,0 +1,34 @@
+.noSavedImage {
+  width: 500px;
+}
+
+.noSavedContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90vw;
+}
+
+.no-saved-dark {
+  background-color: #0f0f0f;
+}
+
+.no-saved-light {
+  background-color: #f9f9f9;
+}
+
+.heading-light {
+  color: white;
+}
+
+.heading-dark {
+  color: #1e293b;
+}
+
+.para-light {
+  color: #f1f5f9;
+}
+.para-dark {
+  color: #475569;
+}
