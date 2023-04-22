@@ -34,11 +34,16 @@ const Header = props => (
       return (
         <nav className={`nav-bar ${headerThemeColor}`}>
           <Link to="/">
-            <img className="header-logo" alt="logo" src={headerLogo} />
+            <img className="header-logo" alt="website logo" src={headerLogo} />
           </Link>
 
           <div className="header-details-container">
-            <button onClick={changeTheme} className="header-btns" type="button">
+            <button
+              data-testid="theme"
+              onClick={changeTheme}
+              className="header-btns"
+              type="button"
+            >
               {darkMode ? (
                 <BsBrightnessHigh className="header-icons theme-btn-color" />
               ) : (

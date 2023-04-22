@@ -1,3 +1,6 @@
+import {HiFire} from 'react-icons/hi'
+import {formatDistanceToNow} from 'date-fns'
+import {Link} from 'react-router-dom'
 import Header from '../Header'
 import Navbar from '../Navbar'
 
@@ -24,6 +27,58 @@ const SavedVideosRoute = () => {
     )
   }
 
+  const renderSavedVideos = (darkMode, savedVideos) => {
+    const bannerBg = darkMode ? 'banner-dark' : 'banner-light'
+    const fireIconBg = darkMode ? 'icon-dark' : 'icon-light'
+
+    return (
+      <div>
+        <div className={`saved-videos-top-section ${bannerBg}`}>
+          <div className={`trending-section-icon ${fireIconBg}`}>
+            <HiFire className="trending-icon" />
+          </div>
+          <h1>Saved Videos</h1>
+        </div>
+        <ul className="saved-videos-container">
+          {savedVideos.map(eachVideo => {
+            const dateTime = new Date(eachVideo.publishedAt)
+
+            const year = dateTime.getFullYear()
+            const date = dateTime.getDate()
+            const month = dateTime.getMonth()
+
+            const publishedAt = formatDistanceToNow(new Date(year, month, date))
+
+            return (
+              <Link to={`/videos/${eachVideo.id}`}>
+                <li key={eachVideo.id} className="video-list-item">
+                  <div className="video-item-section">
+                    <img
+                      className="saved-thumbnail-image"
+                      alt=""
+                      src={eachVideo.thumbnailUrl}
+                    />
+
+                    <div className="video-details-section">
+                      <p className="video-title">{eachVideo.title}</p>
+                      <p className="channel-name">{eachVideo.channel.name}</p>
+                      <div>
+                        <p className="views-count">
+                          {eachVideo.viewCount} Views
+                        </p>
+                        <p className="published-at">.{publishedAt}</p>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </Link>
+            )
+          })}
+        </ul>
+      </div>
+    )
+  }
+
   return (
     <NxtWatchContext.Consumer>
       {value => {
@@ -35,7 +90,9 @@ const SavedVideosRoute = () => {
 
             <div className="home-nav-section">
               <Navbar />
-              {savedVideos.length === 0 ? noVideos(darkMode) : null}
+              {savedVideos.length === 0
+                ? noVideos(darkMode)
+                : renderSavedVideos(darkMode, savedVideos)}
             </div>
           </div>
         )

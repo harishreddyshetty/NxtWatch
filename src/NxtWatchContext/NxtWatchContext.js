@@ -5,6 +5,7 @@ const NxtWatchContext = React.createContext({
   onClickThemeBtn: () => {},
   activeTab: 'HOME',
   savedVideos: [],
+  onClickSaveBtn: () => {},
 })
 
 export default NxtWatchContext

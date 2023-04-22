@@ -7,6 +7,7 @@ import TrendingRoute from './components/TrendingRoute'
 import GamingRoute from './components/GamingRoute'
 import VideoItemDetailsRoute from './components/VideoItemDetailsRoute'
 import SavedVideosRoute from './components/SavedVideosRoute'
+import NotFoundRoute from './components/NotFoundRoute'
 
 import './App.css'
 import NxtWatchContext from './NxtWatchContext/NxtWatchContext'
@@ -19,6 +20,22 @@ class App extends Component {
     this.setState(prevState => ({darkMode: !prevState.darkMode}))
   }
 
+  onClickSave = video => {
+    const {savedVideos} = this.state
+
+    const checkVideo = savedVideos.filter(
+      eachVideo => eachVideo.id === video.id,
+    )
+
+    console.log(checkVideo, 'onclick save')
+
+    if (checkVideo.length === 0) {
+      this.setState(prevState => ({
+        savedVideos: [...prevState.savedVideos, video],
+      }))
+    }
+  }
+
   render() {
     const {darkMode, activeTab, savedVideos} = this.state
     return (
@@ -28,6 +45,7 @@ class App extends Component {
           activeTab,
           onClickThemeBtn: this.onClickThemeBtn,
           savedVideos,
+          onClickSaveBtn: this.onClickSave,
         }}
       >
         <Switch>
@@ -45,6 +63,7 @@ class App extends Component {
             path="/videos/:id"
             component={VideoItemDetailsRoute}
           />
+          <Route component={NotFoundRoute} />
         </Switch>
       </NxtWatchContext.Provider>
     )

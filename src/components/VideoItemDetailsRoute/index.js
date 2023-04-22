@@ -8,6 +8,8 @@ import Loader from 'react-loader-spinner'
 import Header from '../Header'
 import Navbar from '../Navbar'
 
+import NxtWatchContext from '../../NxtWatchContext/NxtWatchContext'
+
 import './index.css'
 
 const apiStatusConstants = {
@@ -80,57 +82,69 @@ class VideoItemDetailsRoute extends Component {
     const publishedAt = formatDistanceToNow(new Date(year, month, date))
 
     return (
-      <div>
-        <ReactPlayer
-          url={videoItemDetails.videoUrl}
-          controls
-          width="65vw"
-          height="500px"
-        />
-        <p>{videoItemDetails.title}</p>
-        <div className="views-buttons-container">
-          <div className="views-published-container">
-            <p>{videoItemDetails.viewCount} views</p>
-            <p>. {publishedAt}</p>
-          </div>
-          <ul className="buttons-container">
-            <li className="single-btn-container">
-              <button className="btn" type="button">
-                <BiLike className="btn-icon" /> Like
-              </button>
-            </li>
+      <NxtWatchContext.Consumer>
+        {value => {
+          const {onClickSaveBtn} = value
 
-            <li className="single-btn-container">
-              <button className="btn" type="button">
-                <BiDislike className="btn-icon" /> Dislike
-              </button>
-            </li>
+          const clickSave = () => {
+            onClickSaveBtn(videoItemDetails)
+          }
 
-            <li className="single-btn-container">
-              <button className="btn" type="button">
-                <MdPlaylistAdd className="btn-icon" /> save
-              </button>
-            </li>
-          </ul>
-        </div>
+          return (
+            <div>
+              <ReactPlayer
+                url={videoItemDetails.videoUrl}
+                controls
+                width="65vw"
+                height="500px"
+              />
+              <p>{videoItemDetails.title}</p>
+              <div className="views-buttons-container">
+                <div className="views-published-container">
+                  <p>{videoItemDetails.viewCount} views</p>
+                  <p>. {publishedAt}</p>
+                </div>
+                <ul className="buttons-container">
+                  <li className="single-btn-container">
+                    <button className="btn" type="button">
+                      <BiLike className="btn-icon" /> Like
+                    </button>
+                  </li>
 
-        <hr />
+                  <li className="single-btn-container">
+                    <button className="btn" type="button">
+                      <BiDislike className="btn-icon" /> Dislike
+                    </button>
+                  </li>
 
-        <div className="channel-details-container">
-          <img
-            className="channel-img"
-            src={videoItemDetails.channel.profileImageUrl}
-            alt={videoItemDetails.channel.name}
-          />
+                  <li className="single-btn-container">
+                    <button onClick={clickSave} className="btn" type="button">
+                      <MdPlaylistAdd className="btn-icon" /> save
+                    </button>
+                  </li>
+                </ul>
+              </div>
 
-          <div>
-            <p>{videoItemDetails.channel.name}</p>
-            <p>{videoItemDetails.channel.subscriberCount} subscribers</p>
-          </div>
-        </div>
+              <hr />
 
-        <p>{videoItemDetails.description}</p>
-      </div>
+              <div className="channel-details-container">
+                <img
+                  className="channel-img"
+                  src={videoItemDetails.channel.profileImageUrl}
+                  alt={videoItemDetails.channel.name}
+                />
+
+                <div>
+                  <p>{videoItemDetails.channel.name}</p>
+                  <p>{videoItemDetails.channel.subscriberCount} subscribers</p>
+                </div>
+              </div>
+
+              <p>{videoItemDetails.description}</p>
+            </div>
+          )
+        }}
+      </NxtWatchContext.Consumer>
     )
   }
 

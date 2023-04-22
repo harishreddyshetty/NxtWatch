@@ -1,4 +1,5 @@
 import {Component} from 'react'
+import {Redirect} from 'react-router-dom'
 import Cookie from 'js-cookie'
 
 import NxtWatchContext from '../../NxtWatchContext/NxtWatchContext'
@@ -82,7 +83,11 @@ class LoginRoute extends Component {
           <div className={`login-page ${pageTheme}`}>
             <div className={`login-form-container ${loginFormTheme}`}>
               <div className="img-container">
-                <img className="websiteLogo" alt="logo" src={loginPageImage} />
+                <img
+                  className="websiteLogo"
+                  alt="website logo"
+                  src={loginPageImage}
+                />
               </div>
 
               <form className="login-form" onSubmit={this.submitForm}>
@@ -139,6 +144,11 @@ class LoginRoute extends Component {
   )
 
   render() {
+    const jwtToken = Cookie.get('jwt_token')
+
+    if (jwtToken !== undefined) {
+      return <Redirect to="/" />
+    }
     return <>{this.renderLoginForm()}</>
   }
 }

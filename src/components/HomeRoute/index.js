@@ -62,7 +62,7 @@ class HomeRoute extends Component {
 
       this.setState({
         homePageVideos: updatedVideosData,
-        apiStatus: apiStatusConstants.success,
+        apiStatus: apiStatusConstants.failure,
       })
     } else {
       this.setState({apiStatus: apiStatusConstants.failure})
@@ -74,14 +74,15 @@ class HomeRoute extends Component {
   }
 
   renderBanner = () => (
-    <div className="banner-section">
+    <div data-testid="banner" className="banner-section">
       <div className="banner-top-section">
         <img
           className="home-website-logo"
-          alt="logo"
+          alt="nxt watch logo"
           src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
         />
         <button
+          data-testid="close"
           onClick={this.closeBanner}
           className="cross-icon-btn"
           type="button"
@@ -89,9 +90,7 @@ class HomeRoute extends Component {
           <BsX className="cross-icon" />
         </button>
       </div>
-      <p>
-        But Nxt Watch Premium prepaid plans with <br /> UPI
-      </p>
+      <p>Buy Nxt Watch Premium</p>
       <button type="button">GET IT NOW</button>
     </div>
   )
@@ -132,6 +131,7 @@ class HomeRoute extends Component {
                 placeholder="Search"
               />
               <button
+                data-testid="searchButton"
                 className="search-btn"
                 onClick={this.onClickSearch}
                 type="button"
@@ -176,14 +176,14 @@ class HomeRoute extends Component {
                         <div>
                           <img
                             className="thumbnail-img"
-                            alt="thumbnail"
+                            alt="video thumbnail"
                             src={eachVideo.thumbnailUrl}
                           />
 
                           <div className="video-bottom-section">
                             <img
                               className="home-channel-logo"
-                              alt="channel-logo"
+                              alt="channel logo"
                               src={eachVideo.channel.profileImageUrl}
                             />
                             <div>
@@ -233,6 +233,49 @@ class HomeRoute extends Component {
       <Loader type="ThreeDots" color="#4f46e5" height="50" width="50" />
     </div>
   )
+
+  onClickRetry = () => {
+    this.getHomeVideoDetails()
+  }
+
+  renderFailureView = () => {
+    const {searchInput} = this.state
+
+    return (
+      <div>
+        <div>
+          <input
+            className="search-input"
+            value={searchInput}
+            onChange={this.updateSearch}
+            type="search"
+            placeholder="Search"
+          />
+          <button
+            data-testid="searchButton"
+            className="search-btn"
+            onClick={this.onClickSearch}
+            type="button"
+          >
+            <HiSearch />
+          </button>
+        </div>
+        <img
+          alt="failure"
+          src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
+        />
+        <h1>Oops! Something Went Wrong</h1>
+        <p>
+          We are having some trouble to complete your request.
+          <br /> Please try again.
+        </p>
+
+        <button type="button" onClick={this.onClickRetry}>
+          Retry
+        </button>
+      </div>
+    )
+  }
 
   renderHomeVideosDetails = () => {
     const {apiStatus} = this.state
