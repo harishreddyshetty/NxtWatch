@@ -13,7 +13,10 @@ const SavedVideosRoute = () => {
     const headingColor = mode ? 'heading-light' : 'heading-dark'
     const paraColor = mode ? 'para-light' : 'para-dark'
     return (
-      <div className={`noSavedContainer ${noSavedBg}`}>
+      <div
+        data-testid="savedVideos"
+        className={`noSavedContainer ${noSavedBg}`}
+      >
         <img
           className="noSavedImage"
           src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-saved-videos-img.png"

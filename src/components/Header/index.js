@@ -1,5 +1,6 @@
 import './index.css'
 import {withRouter, Link} from 'react-router-dom'
+import Popup from 'reactjs-popup'
 import {BsMoon, BsBrightnessHigh} from 'react-icons/bs'
 import Cookie from 'js-cookie'
 
@@ -12,11 +13,59 @@ const Header = props => (
     {value => {
       const {darkMode, onClickThemeBtn} = value
 
+      const logoutButtonColor = darkMode ? 'btn-dark' : 'btn-light'
+
       const onClickLogout = () => {
         const {history} = props
         history.replace('/login')
         Cookie.remove('jwt_token')
       }
+
+      const overlayStyles = {
+        backgroundColor: 'transparent',
+      }
+
+      const ReactPopUp = () => (
+        <div>
+          <Popup
+            modal
+            trigger={
+              <button
+                className={`logout-btn ${logoutButtonColor}`}
+                type="button"
+              >
+                Logout
+              </button>
+            }
+            overlayStyle={overlayStyles}
+          >
+            {close => (
+              <div className="popup-container">
+                <div>
+                  <p>Are you sure, you want to logout</p>
+                </div>
+
+                <div>
+                  <button
+                    type="button"
+                    className="cancel-button"
+                    onClick={() => close()}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="confirm-button"
+                    onClick={onClickLogout}
+                    type="button"
+                  >
+                    Confirm
+                  </button>
+                </div>
+              </div>
+            )}
+          </Popup>
+        </div>
+      )
 
       const changeTheme = () => {
         onClickThemeBtn()
@@ -28,8 +77,6 @@ const Header = props => (
       const headerLogo = darkMode
         ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-dark-theme-img.png'
         : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png'
-
-      const logoutButtonColor = darkMode ? 'btn-dark' : 'btn-light'
 
       return (
         <nav className={`nav-bar ${headerThemeColor}`}>
@@ -64,13 +111,7 @@ const Header = props => (
               <FiLogOut className={`header-icons ${headerIconsColor}`} />
             </button>
 
-            <button
-              onClick={onClickLogout}
-              className={`logout-btn ${logoutButtonColor}`}
-              type="button"
-            >
-              Logout
-            </button>
+            {ReactPopUp()}
           </div>
         </nav>
       )

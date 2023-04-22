@@ -24,7 +24,7 @@ const FailureView = props => {
           <div className={`failure-view-container ${FailureBg}`}>
             <img
               className="failure-img"
-              alt="failure"
+              alt="failure view"
               src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
             />
             <h1 className={failureHeading}>Oops! Something Went Wrong</h1>

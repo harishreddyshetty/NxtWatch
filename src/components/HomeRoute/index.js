@@ -144,7 +144,7 @@ class HomeRoute extends Component {
               <div className="noVideosContainer">
                 <img
                   className="noSavedVideoImg"
-                  alt="no saved videos"
+                  alt="no videos"
                   src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-search-results-img.png"
                 />
                 <h1>No Search results found</h1>
@@ -261,7 +261,7 @@ class HomeRoute extends Component {
           </button>
         </div>
         <img
-          alt="failure"
+          alt="failure view"
           src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
         />
         <h1>Oops! Something Went Wrong</h1>
