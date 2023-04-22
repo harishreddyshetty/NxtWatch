@@ -2,21 +2,31 @@ import {Component} from 'react'
 import Cookie from 'js-cookie'
 import {Link} from 'react-router-dom'
 import {MdPlaylistAdd} from 'react-icons/md'
+import Loader from 'react-loader-spinner'
 import Header from '../Header'
 import Navbar from '../Navbar'
+import FailureView from '../FailureView'
 
 import NxtWatchContext from '../../NxtWatchContext/NxtWatchContext'
 
 import './index.css'
 
+const apiStatusConstants = {
+  initial: 'INITIAL',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+  inProgress: 'IN_PROGRESS',
+}
+
 class GamingRoute extends Component {
-  state = {videosList: []}
+  state = {videosList: [], apiStatus: apiStatusConstants.initial}
 
   componentDidMount() {
     this.getGamingDetails()
   }
 
   getGamingDetails = async () => {
+    this.setState({apiStatus: apiStatusConstants.inProgress})
     const jwtToken = Cookie.get('jwt_token')
     const url = 'https://apis.ccbp.in/videos/gaming'
     const options = {
@@ -36,7 +46,12 @@ class GamingRoute extends Component {
         viewCount: eachVideo.view_count,
       }))
 
-      this.setState({videosList: updatedData})
+      this.setState({
+        videosList: updatedData,
+        apiStatus: apiStatusConstants.success,
+      })
+    } else {
+      this.setState({apiStatus: apiStatusConstants.failure})
     }
   }
 
@@ -88,6 +103,31 @@ class GamingRoute extends Component {
     )
   }
 
+  renderLoadingView = () => (
+    <div className="loader-container" data-testid="loader">
+      <Loader type="ThreeDots" color="#4f46e5" height="50" width="50" />
+    </div>
+  )
+
+  onClickRetry = () => {
+    this.getGamingDetails()
+  }
+
+  renderGamingVideosPage = () => {
+    const {apiStatus} = this.state
+
+    switch (apiStatus) {
+      case apiStatusConstants.success:
+        return this.renderGamingVideos()
+      case apiStatusConstants.failure:
+        return <FailureView onClickRetry={this.onClickRetry} />
+      case apiStatusConstants.inProgress:
+        return this.renderLoadingView()
+      default:
+        return null
+    }
+  }
+
   render() {
     return (
       <div>
@@ -95,7 +135,7 @@ class GamingRoute extends Component {
 
         <div className="home-nav-section">
           <Navbar />
-          <div>{this.renderGamingVideos()}</div>
+          <div>{this.renderGamingVideosPage()}</div>
         </div>
       </div>
     )

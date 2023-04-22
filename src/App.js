@@ -27,12 +27,18 @@ class App extends Component {
       eachVideo => eachVideo.id === video.id,
     )
 
-    console.log(checkVideo, 'onclick save')
+    console.log(checkVideo, 'app.js')
 
     if (checkVideo.length === 0) {
       this.setState(prevState => ({
         savedVideos: [...prevState.savedVideos, video],
       }))
+    } else {
+      const removeVideo = savedVideos.filter(
+        eachVideo => eachVideo.id !== video.id,
+      )
+
+      this.setState({savedVideos: removeVideo})
     }
   }
 

@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 70vw;
 }
 
 .views-published-container {
@@ -43,4 +44,21 @@
 .btn-icon {
   font-size: 25px;
   margin-right: 5px;
+}
+
+.btn-liked-dislike {
+  color: #3b82f6;
+}
+
+.video-details-bg-dark {
+  background-color: #0f0f0f;
+}
+.video-details-bg-light {
+  background-color: #f9f9f9;
+}
+
+.video-details-container {
+  height: 100vh;
+  padding: 15px;
+  width: 85vw;
 }

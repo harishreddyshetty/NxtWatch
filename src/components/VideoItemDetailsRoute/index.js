@@ -20,7 +20,12 @@ const apiStatusConstants = {
 }
 
 class VideoItemDetailsRoute extends Component {
-  state = {videoItemDetails: {}, apiStatus: apiStatusConstants.initial}
+  state = {
+    videoItemDetails: {},
+    apiStatus: apiStatusConstants.initial,
+    liked: false,
+    dislike: false,
+  }
 
   componentDidMount() {
     this.getVideoDetails()
@@ -68,10 +73,9 @@ class VideoItemDetailsRoute extends Component {
   }
 
   renderVideoPlayer = () => {
-    const {videoItemDetails} = this.state
+    const {videoItemDetails, liked, dislike} = this.state
 
-    console.log(videoItemDetails, 'video Details of player')
-    console.log(videoItemDetails.channel.name)
+    // console.log(videoItemDetails, 'video Details of player')
 
     const dateTime = new Date(videoItemDetails.publishedAt)
 
@@ -81,17 +85,40 @@ class VideoItemDetailsRoute extends Component {
 
     const publishedAt = formatDistanceToNow(new Date(year, month, date))
 
+    const onClickLike = () => {
+      this.setState(prevState => ({liked: !prevState.liked, dislike: false}))
+    }
+
+    const onClickDislike = () => {
+      this.setState(prevState => ({
+        dislike: !prevState.dislike,
+        liked: false,
+      }))
+    }
+
+    const likeBtnColor = liked ? 'btn-liked-dislike' : null
+    const disLikeBtnColor = dislike ? 'btn-liked-dislike' : null
+
     return (
       <NxtWatchContext.Consumer>
         {value => {
-          const {onClickSaveBtn} = value
+          const {onClickSaveBtn, savedVideos, darkMode} = value
+
+          const videoSaved = savedVideos.includes(videoItemDetails)
+
+          const saveBtnText = videoSaved ? 'saved' : 'save'
+          const saveBtnColor = videoSaved ? 'btn-liked-dislike' : null
 
           const clickSave = () => {
             onClickSaveBtn(videoItemDetails)
           }
 
+          const VideoPageBg = darkMode
+            ? 'video-details-bg-dark'
+            : 'video-details-bg-light'
+
           return (
-            <div>
+            <div className={` video-details-container ${VideoPageBg}`}>
               <ReactPlayer
                 url={videoItemDetails.videoUrl}
                 controls
@@ -106,20 +133,32 @@ class VideoItemDetailsRoute extends Component {
                 </div>
                 <ul className="buttons-container">
                   <li className="single-btn-container">
-                    <button className="btn" type="button">
+                    <button
+                      onClick={onClickLike}
+                      className={`btn ${likeBtnColor}`}
+                      type="button"
+                    >
                       <BiLike className="btn-icon" /> Like
                     </button>
                   </li>
 
                   <li className="single-btn-container">
-                    <button className="btn" type="button">
+                    <button
+                      onClick={onClickDislike}
+                      className={`btn ${disLikeBtnColor}`}
+                      type="button"
+                    >
                       <BiDislike className="btn-icon" /> Dislike
                     </button>
                   </li>
 
                   <li className="single-btn-container">
-                    <button onClick={clickSave} className="btn" type="button">
-                      <MdPlaylistAdd className="btn-icon" /> save
+                    <button
+                      onClick={clickSave}
+                      className={`btn ${saveBtnColor}`}
+                      type="button"
+                    >
+                      <MdPlaylistAdd className="btn-icon" /> {saveBtnText}
                     </button>
                   </li>
                 </ul>
@@ -184,3 +223,11 @@ class VideoItemDetailsRoute extends Component {
 }
 
 export default VideoItemDetailsRoute
+
+//  const isVideoSaved = savedVideos.find(
+//             eachVideo => eachVideo.id === videoItemDetails.id,
+//           )
+
+// console.log(videoSaved, 'includes ')
+//           console.log(isVideoSaved, 'find method ')
+//           console.log(savedVideos, 'saved videos')

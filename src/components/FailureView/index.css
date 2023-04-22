@@ -1,0 +1,39 @@
+.failure-img {
+  width: 400px;
+}
+
+.failure-view-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80vw;
+  height: 100vh;
+}
+
+.failure-para {
+  text-align: center;
+  color: #475569;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.retry-btn {
+  background-color: #4f46e5;
+  border: 0px none;
+  width: 80px;
+  height: 35px;
+  cursor: pointer;
+}
+
+.failure-heading-light {
+  color: #ffffff;
+}
+
+.background-dark {
+  background-color: #0f0f0f;
+}
+
+.background-light {
+  background-color: #f9f9f9;
+}

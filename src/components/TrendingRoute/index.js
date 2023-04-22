@@ -3,21 +3,31 @@ import Cookie from 'js-cookie'
 import {Link} from 'react-router-dom'
 import {formatDistanceToNow} from 'date-fns'
 import {HiFire} from 'react-icons/hi'
+import Loader from 'react-loader-spinner'
 import Header from '../Header'
 import Navbar from '../Navbar'
+import FailureView from '../FailureView'
 
 import NxtWatchContext from '../../NxtWatchContext/NxtWatchContext'
 
 import './index.css'
 
+const apiStatusConstants = {
+  initial: 'INITIAL',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+  inProgress: 'IN_PROGRESS',
+}
+
 class TrendingRoute extends Component {
-  state = {trendingVideosList: []}
+  state = {trendingVideosList: [], apiStatus: apiStatusConstants.initial}
 
   componentDidMount() {
     this.getTrendingVideosData()
   }
 
   getTrendingVideosData = async () => {
+    this.setState({apiStatus: apiStatusConstants.inProgress})
     const jwtToken = Cookie.get('jwt_token')
     const url = 'https://apis.ccbp.in/videos/trending'
     const options = {
@@ -43,7 +53,12 @@ class TrendingRoute extends Component {
         },
       }))
       console.log(updatedData)
-      this.setState({trendingVideosList: updatedData})
+      this.setState({
+        trendingVideosList: updatedData,
+        apiStatus: apiStatusConstants.success,
+      })
+    } else {
+      this.setState({apiStatus: apiStatusConstants.failure})
     }
   }
 
@@ -124,6 +139,31 @@ class TrendingRoute extends Component {
     )
   }
 
+  renderLoadingView = () => (
+    <div className="loader-container" data-testid="loader">
+      <Loader type="ThreeDots" color="#4f46e5" height="50" width="50" />
+    </div>
+  )
+
+  onClickRetry = () => {
+    this.getTrendingVideosData()
+  }
+
+  renderTrendingVideosPage = () => {
+    const {apiStatus} = this.state
+
+    switch (apiStatus) {
+      case apiStatusConstants.success:
+        return this.renderVideo()
+      case apiStatusConstants.failure:
+        return <FailureView onClickRetry={this.onClickRetry} />
+      case apiStatusConstants.inProgress:
+        return this.renderLoadingView()
+      default:
+        return null
+    }
+  }
+
   render() {
     return (
       <div>
@@ -131,7 +171,7 @@ class TrendingRoute extends Component {
 
         <div className="home-nav-section">
           <Navbar />
-          <div>{this.renderVideo()}</div>
+          <div>{this.renderTrendingVideosPage()}</div>
         </div>
       </div>
     )

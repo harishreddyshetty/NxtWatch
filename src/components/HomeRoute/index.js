@@ -62,7 +62,7 @@ class HomeRoute extends Component {
 
       this.setState({
         homePageVideos: updatedVideosData,
-        apiStatus: apiStatusConstants.failure,
+        apiStatus: apiStatusConstants.success,
       })
     } else {
       this.setState({apiStatus: apiStatusConstants.failure})
