@@ -7,6 +7,7 @@ import {MdPlaylistAdd} from 'react-icons/md'
 import Loader from 'react-loader-spinner'
 import Header from '../Header'
 import Navbar from '../Navbar'
+import FailureView from '../FailureView'
 
 import NxtWatchContext from '../../NxtWatchContext/NxtWatchContext'
 
@@ -170,7 +171,7 @@ class VideoItemDetailsRoute extends Component {
                 <img
                   className="channel-img"
                   src={videoItemDetails.channel.profileImageUrl}
-                  alt={videoItemDetails.channel.name}
+                  alt="channel logo"
                 />
 
                 <div>
@@ -193,6 +194,10 @@ class VideoItemDetailsRoute extends Component {
     </div>
   )
 
+  onClickRetry = () => {
+    this.getVideoDetails()
+  }
+
   renderVideoDetailsPage = () => {
     const {apiStatus} = this.state
 
@@ -200,7 +205,7 @@ class VideoItemDetailsRoute extends Component {
       case apiStatusConstants.success:
         return this.renderVideoPlayer()
       case apiStatusConstants.failure:
-        return this.renderFailureView()
+        return <FailureView onClickRetry={this.onClickRetry} />
       case apiStatusConstants.inProgress:
         return this.renderLoadingView()
       default:

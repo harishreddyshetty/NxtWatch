@@ -112,7 +112,7 @@ class TrendingRoute extends Component {
                         <div className="video-item-section">
                           <img
                             className="thumbnail-image"
-                            alt=""
+                            alt="video thumbnail"
                             src={eachVideo.thumbnailUrl}
                           />
 

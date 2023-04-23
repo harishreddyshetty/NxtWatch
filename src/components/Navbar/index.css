@@ -1,10 +1,13 @@
 .nav-bar-container {
   margin-left: 0px;
-  padding-left: 0px;
+  padding-left: 10px;
   width: 250px;
   height: 100vh;
   margin-top: 0px;
   padding-top: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .nav-items-list {
@@ -56,4 +59,13 @@
 
 .text-dark {
   color: #1e293b;
+}
+
+.social-logos {
+  width: 35px;
+  margin-right: 10px;
+}
+
+.contact-us-container {
+  margin-bottom: 60px;
 }

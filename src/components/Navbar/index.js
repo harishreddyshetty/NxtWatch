@@ -56,6 +56,27 @@ const Navbar = () => (
               </Link>
             ))}
           </ul>
+
+          <div className="contact-us-container">
+            <p>CONTACT US</p>
+            <img
+              className="social-logos"
+              alt="facebook logo"
+              src="https://assets.ccbp.in/frontend/react-js/nxt-watch-facebook-logo-img.png"
+            />
+            <img
+              className="social-logos"
+              alt="twitter logo"
+              src="https://assets.ccbp.in/frontend/react-js/nxt-watch-twitter-logo-img.png"
+            />
+            <img
+              className="social-logos"
+              alt="linked in logo"
+              src="https://assets.ccbp.in/frontend/react-js/nxt-watch-linked-in-logo-img.png"
+            />
+
+            <p>Enjoy! Now to see your channels and recommendations!</p>
+          </div>
         </nav>
       )
     }}

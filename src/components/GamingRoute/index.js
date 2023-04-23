@@ -87,7 +87,7 @@ class GamingRoute extends Component {
                     <li key={eachVideo.id} className="gamingVideo-list-item">
                       <img
                         className="gamingThumbnail"
-                        alt="game"
+                        alt="video thumbnail"
                         src={eachVideo.thumbnailUrl}
                       />
                       <p>{eachVideo.title}</p>
