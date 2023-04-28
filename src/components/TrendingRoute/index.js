@@ -108,13 +108,33 @@ class TrendingRoute extends Component {
 
                   return (
                     <Link to={`/videos/${eachVideo.id}`} className="text">
-                      <li key={eachVideo.id} className="video-list-item">
-                        <div className="video-item-section">
+                      <li key={eachVideo.id} className="video-list-item ">
+                        <div className="video-item-section video-list-item-ex-small">
                           <img
                             className="thumbnail-image"
                             alt="video thumbnail"
                             src={eachVideo.thumbnailUrl}
                           />
+
+                          <div className="video-details-section-exSmall">
+                            <img
+                              className="channel-logo-ex-small"
+                              alt="channel logo"
+                              src={eachVideo.channel.profileImageUrl}
+                            />
+                            <div>
+                              <p className="video-title-ex-small">
+                                {eachVideo.title}
+                              </p>
+                              <div className="video-details-exSmall">
+                                <p className="channel-name">
+                                  {eachVideo.channel.name}
+                                </p>
+                                <p>. {eachVideo.viewCount} Views </p>
+                                <p>. {publishedAt}</p>
+                              </div>
+                            </div>
+                          </div>
 
                           <div className="video-details-section">
                             <p className="video-title">{eachVideo.title}</p>

@@ -75,11 +75,7 @@ class VideoItemDetailsRoute extends Component {
 
   renderVideoPlayer = () => {
     const {videoItemDetails, liked, dislike} = this.state
-
-    // console.log(videoItemDetails, 'video Details of player')
-
     const dateTime = new Date(videoItemDetails.publishedAt)
-
     const year = dateTime.getFullYear()
     const date = dateTime.getDate()
     const month = dateTime.getMonth()
@@ -118,13 +114,17 @@ class VideoItemDetailsRoute extends Component {
             ? 'video-details-bg-dark'
             : 'video-details-bg-light'
 
+          const likeBtnText = liked ? 'Liked' : 'Like'
+          const DislikeBtnText = dislike ? 'Disliked' : 'Dislike'
+
           return (
-            <div className={` video-details-container ${VideoPageBg}`}>
+            <div className={`video-details-container ${VideoPageBg}`}>
               <ReactPlayer
                 url={videoItemDetails.videoUrl}
                 controls
-                width="65vw"
+                width="80vw"
                 height="500px"
+                className="video-player-xs"
               />
               <p>{videoItemDetails.title}</p>
               <div className="views-buttons-container">
@@ -139,7 +139,7 @@ class VideoItemDetailsRoute extends Component {
                       className={`btn ${likeBtnColor}`}
                       type="button"
                     >
-                      <BiLike className="btn-icon" /> Like
+                      <BiLike className="btn-icon" /> {likeBtnText}
                     </button>
                   </li>
 
@@ -149,7 +149,7 @@ class VideoItemDetailsRoute extends Component {
                       className={`btn ${disLikeBtnColor}`}
                       type="button"
                     >
-                      <BiDislike className="btn-icon" /> Dislike
+                      <BiDislike className="btn-icon" /> {DislikeBtnText}
                     </button>
                   </li>
 

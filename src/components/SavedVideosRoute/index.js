@@ -58,7 +58,7 @@ const SavedVideosRoute = () => {
                   <div className="video-item-section">
                     <img
                       className="saved-thumbnail-image"
-                      alt=""
+                      alt="video thumbnail"
                       src={eachVideo.thumbnailUrl}
                     />
 

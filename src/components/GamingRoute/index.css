@@ -17,6 +17,18 @@
   margin-right: 30px;
 }
 
+@media screen and (max-width: 575px) {
+  .gamingVideo-list-item {
+    width: 130px;
+  }
+  .gamingVideos-container {
+    width: 100vw;
+  }
+  .gamingThumbnail {
+    width: 130px;
+  }
+}
+
 .gaming-section {
   display: flex;
   align-items: center;
@@ -37,6 +49,12 @@
   padding: 20px;
   border-radius: 50px;
   margin-right: 50px;
+}
+
+@media screen and (max-width: 575px) {
+  .gaming-section {
+    width: 100vw;
+  }
 }
 
 .gaming-icon {
