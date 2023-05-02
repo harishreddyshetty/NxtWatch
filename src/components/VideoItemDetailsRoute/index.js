@@ -24,8 +24,6 @@ class VideoItemDetailsRoute extends Component {
   state = {
     videoItemDetails: {},
     apiStatus: apiStatusConstants.initial,
-    liked: false,
-    dislike: false,
   }
 
   componentDidMount() {
@@ -74,7 +72,7 @@ class VideoItemDetailsRoute extends Component {
   }
 
   renderVideoPlayer = () => {
-    const {videoItemDetails, liked, dislike} = this.state
+    const {videoItemDetails} = this.state
     const dateTime = new Date(videoItemDetails.publishedAt)
     const year = dateTime.getFullYear()
     const date = dateTime.getDate()
@@ -82,29 +80,70 @@ class VideoItemDetailsRoute extends Component {
 
     const publishedAt = formatDistanceToNow(new Date(year, month, date))
 
-    const onClickLike = () => {
-      this.setState(prevState => ({liked: !prevState.liked, dislike: false}))
-    }
-
-    const onClickDislike = () => {
-      this.setState(prevState => ({
-        dislike: !prevState.dislike,
-        liked: false,
-      }))
-    }
-
-    const likeBtnColor = liked ? 'btn-liked-dislike' : null
-    const disLikeBtnColor = dislike ? 'btn-liked-dislike' : null
-
     return (
       <NxtWatchContext.Consumer>
         {value => {
-          const {onClickSaveBtn, savedVideos, darkMode} = value
+          const {
+            onClickSaveBtn,
+            savedVideos,
+            darkMode,
+            onClickLikeDislike,
+            likedVideosList,
+            unLikedVideosList,
+            onClickDislikeBtn,
+          } = value
 
-          const videoSaved = savedVideos.includes(videoItemDetails)
+          const isVideoPresent = likedVideosList.filter(
+            eachVideo => eachVideo.id === videoItemDetails.id,
+          )
 
-          const saveBtnText = videoSaved ? 'saved' : 'save'
-          const saveBtnColor = videoSaved ? 'btn-liked-dislike' : null
+          const isDislikeVideoPresent = unLikedVideosList.filter(
+            eachVideo => eachVideo.id === videoItemDetails.id,
+          )
+
+          const onClickLike = () => {
+            if (isVideoPresent.length === 1) {
+              onClickLikeDislike({id: videoItemDetails.id, liked: false})
+            } else {
+              onClickLikeDislike({id: videoItemDetails.id, liked: true})
+            }
+          }
+
+          const onClickDislike = () => {
+            if (isDislikeVideoPresent.length === 1) {
+              onClickDislikeBtn({id: videoItemDetails.id, Disliked: false})
+            } else {
+              onClickDislikeBtn({id: videoItemDetails.id, Disliked: true})
+            }
+          }
+
+          let isVideoLiked = null
+          if (isVideoPresent.length === 1 && isVideoPresent[0].liked) {
+            isVideoLiked = true
+          } else {
+            isVideoLiked = false
+          }
+
+          let isVideoDisliked = null
+
+          if (
+            isDislikeVideoPresent.length === 1 &&
+            isDislikeVideoPresent[0].Disliked
+          ) {
+            isVideoDisliked = true
+          } else {
+            isVideoDisliked = false
+          }
+
+          const likeBtnColor = isVideoLiked ? 'btn-liked-dislike' : null
+          const disLikeBtnColor = isVideoDisliked ? 'btn-liked-dislike' : null
+
+          const textColor = darkMode ? 'text-white-vdi' : null
+          const countColor = darkMode ? 'count-dark-vdi' : null
+
+          const videoPresent = savedVideos.filter(
+            eachItem => eachItem.id === videoItemDetails.id,
+          )
 
           const clickSave = () => {
             onClickSaveBtn(videoItemDetails)
@@ -114,8 +153,8 @@ class VideoItemDetailsRoute extends Component {
             ? 'video-details-bg-dark'
             : 'video-details-bg-light'
 
-          const likeBtnText = liked ? 'Liked' : 'Like'
-          const DislikeBtnText = dislike ? 'Disliked' : 'Dislike'
+          const likeBtnText = isVideoLiked ? 'Liked' : 'Like'
+          const DislikeBtnText = isVideoDisliked ? 'Disliked' : 'Dislike'
 
           return (
             <div className={`video-details-container ${VideoPageBg}`}>
@@ -126,11 +165,13 @@ class VideoItemDetailsRoute extends Component {
                 height="500px"
                 className="video-player-xs"
               />
-              <p>{videoItemDetails.title}</p>
+              <p className={textColor}>{videoItemDetails.title}</p>
               <div className="views-buttons-container">
                 <div className="views-published-container">
-                  <p>{videoItemDetails.viewCount} views</p>
-                  <p>. {publishedAt}</p>
+                  <p className={countColor}>
+                    {videoItemDetails.viewCount} views
+                  </p>
+                  <p className={countColor}>. {publishedAt}</p>
                 </div>
                 <ul className="buttons-container">
                   <li className="single-btn-container">
@@ -156,10 +197,13 @@ class VideoItemDetailsRoute extends Component {
                   <li className="single-btn-container">
                     <button
                       onClick={clickSave}
-                      className={`btn ${saveBtnColor}`}
+                      className={`btn ${
+                        videoPresent.length === 1 && 'btn-liked-dislike'
+                      }`}
                       type="button"
                     >
-                      <MdPlaylistAdd className="btn-icon" /> {saveBtnText}
+                      <MdPlaylistAdd className="btn-icon" />
+                      {videoPresent.length === 1 ? 'saved' : 'save'}
                     </button>
                   </li>
                 </ul>
@@ -175,12 +219,14 @@ class VideoItemDetailsRoute extends Component {
                 />
 
                 <div>
-                  <p>{videoItemDetails.channel.name}</p>
-                  <p>{videoItemDetails.channel.subscriberCount} subscribers</p>
+                  <p className={textColor}>{videoItemDetails.channel.name}</p>
+                  <p className={countColor}>
+                    {videoItemDetails.channel.subscriberCount} subscribers
+                  </p>
                 </div>
               </div>
 
-              <p>{videoItemDetails.description}</p>
+              <p className={textColor}>{videoItemDetails.description}</p>
             </div>
           )
         }}
@@ -228,11 +274,3 @@ class VideoItemDetailsRoute extends Component {
 }
 
 export default VideoItemDetailsRoute
-
-//  const isVideoSaved = savedVideos.find(
-//             eachVideo => eachVideo.id === videoItemDetails.id,
-//           )
-
-// console.log(videoSaved, 'includes ')
-//           console.log(isVideoSaved, 'find method ')
-//           console.log(savedVideos, 'saved videos')

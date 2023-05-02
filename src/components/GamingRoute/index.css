@@ -10,11 +10,13 @@
 }
 
 .gamingThumbnail {
-  width: 300px;
+  width: 250px;
 }
 
 .gamingVideo-list-item {
   margin-right: 30px;
+  width: 280px;
+  margin-bottom: 30px;
 }
 
 @media screen and (max-width: 575px) {
@@ -33,7 +35,7 @@
   display: flex;
   align-items: center;
   height: 100px;
-  width: 90vw;
+  width: 85vw;
   padding-left: 50px;
 }
 
@@ -68,4 +70,20 @@
 
 .gaming-icon-dark {
   background-color: #0f0f0f;
+}
+
+.game-heading-light {
+  color: white;
+}
+
+.game-title-light {
+  color: white;
+}
+
+.game-title-dark {
+  color: #000000;
+}
+
+.game-views {
+  color: #64748b;
 }

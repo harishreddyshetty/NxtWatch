@@ -43,6 +43,7 @@ const Navbar = () => (
       const navBackground = darkMode ? 'nav-bg-dark' : 'nav-bg-light'
       // const navItemsText = darkMode ? 'text-light' : 'text-dark'
 
+      const contactUsSectionText = darkMode ? 'contact-us-dark-mode' : null
       return (
         <nav className={`${navBackground} nav-bar-container`}>
           <ul className="nav-items-list">
@@ -55,8 +56,8 @@ const Navbar = () => (
             ))}
           </ul>
 
-          <div className="contact-us-container">
-            <p>CONTACT US</p>
+          <div className={`contact-us-container ${contactUsSectionText}`}>
+            <p className="contact-us-heading">CONTACT US</p>
             <img
               className="social-logos"
               alt="facebook logo"

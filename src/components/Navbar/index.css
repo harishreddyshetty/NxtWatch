@@ -3,6 +3,7 @@
   padding-left: 10px;
   width: 250px;
   height: 100vh;
+
   margin-top: 0px;
   padding-top: 0px;
   display: flex;
@@ -68,4 +69,11 @@
 
 .contact-us-container {
   margin-bottom: 60px;
+}
+.contact-us-heading {
+  font-weight: 600;
+}
+
+.contact-us-dark-mode {
+  color: white;
 }

@@ -20,5 +20,3 @@ const NavItems = props => {
 }
 
 export default NavItems
-
-// className={`${navItemsText} nav-item-name`}

@@ -2,10 +2,11 @@ import {Component} from 'react'
 import Cookie from 'js-cookie'
 import {Link} from 'react-router-dom'
 import {MdPlaylistAdd} from 'react-icons/md'
-import Loader from 'react-loader-spinner'
+// import Loader from 'react-loader-spinner'
 import Header from '../Header'
 import Navbar from '../Navbar'
 import FailureView from '../FailureView'
+import LoaderView from '../Loader'
 
 import NxtWatchContext from '../../NxtWatchContext/NxtWatchContext'
 
@@ -38,7 +39,7 @@ class GamingRoute extends Component {
     const response = await fetch(url, options)
     if (response.ok) {
       const data = await response.json()
-      console.log(data)
+      // console.log(data)
       const updatedData = data.videos.map(eachVideo => ({
         id: eachVideo.id,
         thumbnailUrl: eachVideo.thumbnail_url,
@@ -72,13 +73,16 @@ class GamingRoute extends Component {
             ? 'videoSection-dark'
             : 'videoSection-light'
 
+          const gamingHeading = darkMode ? 'game-heading-light' : null
+          const gameTitle = darkMode ? 'game-title-light' : 'game-title-dark'
+
           return (
             <div>
               <div className={`gaming-section ${bannerBg}`}>
                 <div className={`gaming-icon-container ${gamingIconBg}`}>
                   <MdPlaylistAdd className="gaming-icon" />
                 </div>
-                <h1>Gaming</h1>
+                <h1 className={gamingHeading}>Gaming</h1>
               </div>
 
               <ul className={`gamingVideos-container ${gamingVideosSectionBg}`}>
@@ -90,8 +94,10 @@ class GamingRoute extends Component {
                         alt="video thumbnail"
                         src={eachVideo.thumbnailUrl}
                       />
-                      <p>{eachVideo.title}</p>
-                      <p>{eachVideo.viewCount} Watching Worldwide</p>
+                      <p className={gameTitle}>{eachVideo.title}</p>
+                      <p className="game-views">
+                        {eachVideo.viewCount} Watching Worldwide
+                      </p>
                     </li>
                   </Link>
                 ))}
@@ -104,9 +110,10 @@ class GamingRoute extends Component {
   }
 
   renderLoadingView = () => (
-    <div className="loader-container" data-testid="loader">
-      <Loader type="ThreeDots" color="#4f46e5" height="50" width="50" />
-    </div>
+    // <div className="loader-container" data-testid="loader">
+    //   <Loader type="ThreeDots" color="#4f46e5" height="50" width="50" />
+    // </div>
+    <LoaderView />
   )
 
   onClickRetry = () => {

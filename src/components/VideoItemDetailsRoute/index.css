@@ -76,3 +76,11 @@
     height: 500px;
   }
 }
+
+.text-white-vdi {
+  color: #f8fafc;
+}
+
+.count-dark-vdi {
+  color: #64748b;
+}

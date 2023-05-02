@@ -6,6 +6,10 @@ const NxtWatchContext = React.createContext({
   activeTab: 'HOME',
   savedVideos: [],
   onClickSaveBtn: () => {},
+  likedVideosList: [],
+  unLikedVideosList: [],
+  onClickLikeDislike: () => {},
+  onClickDislikeBtn: () => {},
 })
 
 export default NxtWatchContext

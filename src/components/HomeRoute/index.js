@@ -3,10 +3,11 @@ import {Link} from 'react-router-dom'
 import {formatDistanceToNow} from 'date-fns'
 import {BsX} from 'react-icons/bs'
 import {HiSearch} from 'react-icons/hi'
-import Loader from 'react-loader-spinner'
+// import Loader from 'react-loader-spinner'
 import Cookie from 'js-cookie'
 import Header from '../Header'
 import Navbar from '../Navbar'
+import LoaderView from '../Loader'
 
 import NxtWatchContext from '../../NxtWatchContext/NxtWatchContext'
 
@@ -47,7 +48,7 @@ class HomeRoute extends Component {
 
     if (response.ok) {
       const videosData = await response.json()
-      console.log(videosData)
+      // console.log(videosData)
       const updatedVideosData = videosData.videos.map(eachVideo => ({
         id: eachVideo.id,
         publishedAt: eachVideo.published_at,
@@ -228,11 +229,7 @@ class HomeRoute extends Component {
     </div>
   )
 
-  renderLoadingView = () => (
-    <div className="loader-container" data-testid="loader">
-      <Loader type="ThreeDots" color="#4f46e5" height="50" width="50" />
-    </div>
-  )
+  renderLoadingView = () => <LoaderView />
 
   onClickRetry = () => {
     this.getHomeVideoDetails()

@@ -14,7 +14,13 @@ import NxtWatchContext from './NxtWatchContext/NxtWatchContext'
 
 // Replace your code here
 class App extends Component {
-  state = {darkMode: false, activeTab: 'HOME', savedVideos: []}
+  state = {
+    darkMode: false,
+    activeTab: 'HOME',
+    savedVideos: [],
+    likedVideosList: [],
+    unLikedVideosList: [],
+  }
 
   onClickThemeBtn = () => {
     this.setState(prevState => ({darkMode: !prevState.darkMode}))
@@ -27,7 +33,7 @@ class App extends Component {
       eachVideo => eachVideo.id === video.id,
     )
 
-    console.log(checkVideo, 'app.js')
+    // console.log(checkVideo, 'app.js')
 
     if (checkVideo.length === 0) {
       this.setState(prevState => ({
@@ -42,8 +48,48 @@ class App extends Component {
     }
   }
 
+  onClickLikeBtn = data => {
+    const {likedVideosList} = this.state
+    const videoIndex = likedVideosList.findIndex(
+      eachItem => eachItem.id === data.id,
+    )
+
+    console.log(videoIndex)
+    if (videoIndex === -1) {
+      this.setState(prevState => ({
+        likedVideosList: [...prevState.likedVideosList, data],
+      }))
+    } else {
+      likedVideosList[videoIndex] = data
+      this.setState({likedVideosList})
+    }
+  }
+
+  onClickDisLikeButton = data => {
+    const {unLikedVideosList} = this.state
+    const videoIndex = unLikedVideosList.findIndex(
+      eachItem => eachItem.id === data.id,
+    )
+
+    console.log(videoIndex)
+    if (videoIndex === -1) {
+      this.setState(prevState => ({
+        unLikedVideosList: [...prevState.unLikedVideosList, data],
+      }))
+    } else {
+      unLikedVideosList[videoIndex] = data
+      this.setState({unLikedVideosList})
+    }
+  }
+
   render() {
-    const {darkMode, activeTab, savedVideos} = this.state
+    const {
+      darkMode,
+      activeTab,
+      savedVideos,
+      likedVideosList,
+      unLikedVideosList,
+    } = this.state
     return (
       <NxtWatchContext.Provider
         value={{
@@ -52,6 +98,10 @@ class App extends Component {
           onClickThemeBtn: this.onClickThemeBtn,
           savedVideos,
           onClickSaveBtn: this.onClickSave,
+          likedVideosList,
+          onClickLikeDislike: this.onClickLikeBtn,
+          unLikedVideosList,
+          onClickDislikeBtn: this.onClickDisLikeButton,
         }}
       >
         <Switch>

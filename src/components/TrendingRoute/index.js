@@ -3,11 +3,11 @@ import Cookie from 'js-cookie'
 import {Link} from 'react-router-dom'
 import {formatDistanceToNow} from 'date-fns'
 import {HiFire} from 'react-icons/hi'
-import Loader from 'react-loader-spinner'
+// import Loader from 'react-loader-spinner'
 import Header from '../Header'
 import Navbar from '../Navbar'
 import FailureView from '../FailureView'
-
+import LoaderView from '../Loader'
 import NxtWatchContext from '../../NxtWatchContext/NxtWatchContext'
 
 import './index.css'
@@ -52,7 +52,7 @@ class TrendingRoute extends Component {
           profileImageUrl: eachVideo.channel.profile_image_url,
         },
       }))
-      console.log(updatedData)
+      // console.log(updatedData)
       this.setState({
         trendingVideosList: updatedData,
         apiStatus: apiStatusConstants.success,
@@ -85,6 +85,7 @@ class TrendingRoute extends Component {
             : 'videoSection-light'
 
           const trendingIconBg = darkMode ? 'icon-dark' : 'icon-light'
+          const title = darkMode ? 'trend-title-light' : 'trend-title-dark'
 
           return (
             <>
@@ -92,7 +93,7 @@ class TrendingRoute extends Component {
                 <div className={`trending-section-icon ${trendingIconBg}`}>
                   <HiFire className="trending-icon" />
                 </div>
-                <h1>Trending</h1>
+                <h1 className={`banner-heading ${title}`}>Trending</h1>
               </div>
               <ul className={`trending-videos-list ${VideosSectionBg}`}>
                 {trendingVideosList.map(eachVideo => {
@@ -123,7 +124,7 @@ class TrendingRoute extends Component {
                               src={eachVideo.channel.profileImageUrl}
                             />
                             <div>
-                              <p className="video-title-ex-small">
+                              <p className={`video-title-ex-small ${title}`}>
                                 {eachVideo.title}
                               </p>
                               <div className="video-details-exSmall">
@@ -137,7 +138,9 @@ class TrendingRoute extends Component {
                           </div>
 
                           <div className="video-details-section">
-                            <p className="video-title">{eachVideo.title}</p>
+                            <p className={`video-title ${title}`}>
+                              {eachVideo.title}
+                            </p>
                             <p className="channel-name">
                               {eachVideo.channel.name}
                             </p>
@@ -159,11 +162,7 @@ class TrendingRoute extends Component {
     )
   }
 
-  renderLoadingView = () => (
-    <div className="loader-container" data-testid="loader">
-      <Loader type="ThreeDots" color="#4f46e5" height="50" width="50" />
-    </div>
-  )
+  renderLoadingView = () => <LoaderView />
 
   onClickRetry = () => {
     this.getTrendingVideosData()

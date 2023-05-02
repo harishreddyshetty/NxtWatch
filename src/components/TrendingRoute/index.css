@@ -116,14 +116,17 @@
 .views-count {
   display: inline;
   margin-right: 10px;
+  color: #64748b;
 }
 
 .publishedAt {
   display: inline;
+  color: #64748b;
 }
 
 .channel-name {
   margin-top: 15px;
+  color: #64748b;
 }
 
 .icon-light {
@@ -142,4 +145,16 @@
   .video-details-section-exSmall {
     display: none;
   }
+}
+
+.trend-title-light {
+  color: white;
+}
+
+.trend-title-dark {
+  color: #000000;
+}
+
+.banner-heading {
+  font-size: 30px;
 }
