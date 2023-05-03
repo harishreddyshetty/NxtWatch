@@ -97,23 +97,32 @@ class VideoItemDetailsRoute extends Component {
             eachVideo => eachVideo.id === videoItemDetails.id,
           )
 
+          console.log(isVideoPresent, 'isVideoPresent')
+
           const isDislikeVideoPresent = unLikedVideosList.filter(
             eachVideo => eachVideo.id === videoItemDetails.id,
           )
 
+          console.log(isDislikeVideoPresent, 'isDislikeVideoPresent')
+
           const onClickLike = () => {
-            if (isVideoPresent.length === 1) {
+            if (isVideoPresent.length === 1 && isVideoPresent[0].liked) {
               onClickLikeDislike({id: videoItemDetails.id, liked: false})
             } else {
               onClickLikeDislike({id: videoItemDetails.id, liked: true})
+              onClickDislikeBtn({id: videoItemDetails.id, Disliked: false})
             }
           }
 
           const onClickDislike = () => {
-            if (isDislikeVideoPresent.length === 1) {
+            if (
+              isDislikeVideoPresent.length === 1 &&
+              isDislikeVideoPresent[0].Disliked
+            ) {
               onClickDislikeBtn({id: videoItemDetails.id, Disliked: false})
             } else {
               onClickDislikeBtn({id: videoItemDetails.id, Disliked: true})
+              onClickLikeDislike({id: videoItemDetails.id, liked: false})
             }
           }
 

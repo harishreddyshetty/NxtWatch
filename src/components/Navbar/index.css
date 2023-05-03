@@ -1,9 +1,8 @@
 .nav-bar-container {
   margin-left: 0px;
-  padding-left: 10px;
-  width: 250px;
+  padding-left: 0px;
+  width: 200px;
   height: 100vh;
-
   margin-top: 0px;
   padding-top: 0px;
   display: flex;
@@ -20,10 +19,20 @@
   padding-top: 30px;
 }
 
+.nav-item-btn {
+  background-color: transparent;
+  border: 0px none;
+  cursor: pointer;
+  font-size: 15px;
+  margin-left: 0px;
+  padding-left: 0px;
+}
+
 .nav-item {
   display: flex;
   align-items: center;
   height: 30px;
+  margin-bottom: 5px;
 }
 
 @media screen and (max-width: 767px) {
@@ -69,6 +78,7 @@
 
 .contact-us-container {
   margin-bottom: 60px;
+  padding-left: 10px;
 }
 .contact-us-heading {
   font-weight: 600;
@@ -76,4 +86,20 @@
 
 .contact-us-dark-mode {
   color: white;
+}
+
+.nav-item-active-light {
+  background-color: #d7dfe9;
+}
+
+.nav-item-active-dark {
+  background-color: #424242;
+}
+
+.icon-active {
+  color: #ff0000;
+}
+
+.icon-non-active {
+  color: #606060;
 }

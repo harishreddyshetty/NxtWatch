@@ -10,6 +10,7 @@ const NxtWatchContext = React.createContext({
   unLikedVideosList: [],
   onClickLikeDislike: () => {},
   onClickDislikeBtn: () => {},
+  updateNavItem: () => {},
 })
 
 export default NxtWatchContext

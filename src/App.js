@@ -82,6 +82,10 @@ class App extends Component {
     }
   }
 
+  updateNavItem = NavItem => {
+    this.setState({activeTab: NavItem})
+  }
+
   render() {
     const {
       darkMode,
@@ -102,6 +106,7 @@ class App extends Component {
           onClickLikeDislike: this.onClickLikeBtn,
           unLikedVideosList,
           onClickDislikeBtn: this.onClickDisLikeButton,
+          updateNavItem: this.updateNavItem,
         }}
       >
         <Switch>
